@@ -297,6 +297,10 @@ class MyWidget(QWidget, Ui_Form):
         self.lineEdit_shortestPathEnd.setText(text)
 
     def generateNewText(self):
+        """
+        根据输入的文本生成新文本
+        根据桥接词生成新文本
+        """
         input_text = self.plainTextEdit_rawNewInput.toPlainText()
 
         input_text.replace("\n", " ").replace("\r", " ")
