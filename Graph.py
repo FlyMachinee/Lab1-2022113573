@@ -182,7 +182,7 @@ class Graph:
 
     def getBridge(self, node1_str: str, node2_str: str) -> list[str]:
         """
-        计算两个节点之间的桥接节点列表 (node1 -> bridge -> node2)。
+        计算两个节点之间的桥接节点列表 (node1 -> node3 -> node2)。
         如果节点不存在，返回空列表。
         """
         node1_id = self._get_id_or_none(node1_str)
