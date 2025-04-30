@@ -1,7 +1,9 @@
+from turtle import width
 from PySide6.QtGui import QWheelEvent
 from PySide6.QtSvgWidgets import QSvgWidget
 from PySide6.QtWidgets import QVBoxLayout
 from PySide6.QtWidgets import QDialog
+from PySide6.QtGui import QGuiApplication
 import Utils
 
 
@@ -21,8 +23,14 @@ class ImageDialog(QDialog):
 
         self.w, self.h = Utils.get_svg_pixel_dimensions(path)
 
+        screen = QGuiApplication.primaryScreen().geometry()
+        width = screen.width()
+        height = screen.height()
+        x = (width - self.w) // 2
+        y = (height - self.h) // 2
+
         # 根据SVG图像的大小设置对话框的大小
-        self.setGeometry(100, 100, self.w, self.h)
+        self.setGeometry(x, y, self.w, self.h)
 
     def wheelEvent(self, event: QWheelEvent) -> None:
         if event.angleDelta().y() > 0:
