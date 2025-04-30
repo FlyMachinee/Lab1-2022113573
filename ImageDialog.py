@@ -12,7 +12,7 @@ class ImageDialog(QDialog):
 
     def __init__(self, parent, path):
         super().__init__(parent)
-        self.setWindowTitle("Graph Visualization")
+        self.setWindowTitle("SVG图片展示")
         layout = QVBoxLayout(self)
         svg_widget = QSvgWidget()
         svg_widget.load(path)

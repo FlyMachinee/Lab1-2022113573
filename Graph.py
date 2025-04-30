@@ -341,9 +341,6 @@ class Graph:
         d: float = 0.85,
         iterations: int = 100,
         initialization_strategy: str = "uniform",
-        keyword_boosts: (
-            dict[str, float] | None
-        ) = None,  # Keep this for potential future use or manual override
     ) -> dict[str, float]:
         """
         使用 PageRank 算法计算每个节点的 PageRank 值。
@@ -355,11 +352,6 @@ class Graph:
                 'uniform': 标准均匀分配 (默认)。
                 'in_degree': 根据节点的入度进行分配。入度越高的节点初始 PR 越高。
                 'sum_incoming_weights': 根据节点的入边权重总和进行分配。总和越高的节点初始 PR 越高。
-                'keyword_boosts': 使用 keyword_boosts 参数指定的权重进行分配。
-            keyword_boosts: 仅当 initialization_strategy 为 'keyword_boosts' 时有效。
-                            一个字典，用于指定重要关键词及其初始 PageRank 权重因子。
-                            键是关键词字符串，值是权重因子（浮点数，应大于0）。
-                            未指定的节点权重因子为 1.0。
 
         Returns:
             一个字典，键为节点字符串，值为对应的 PageRank 值。
@@ -393,27 +385,6 @@ class Graph:
                 for to_id, weight in self._successor_adj_set[from_id].items():
                     initial_scores[to_id] += weight
             # If a node has no incoming edges, its score remains 0.0
-
-        elif initialization_strategy == "keyword_boosts":
-            if (
-                not keyword_boosts
-                or not isinstance(keyword_boosts, dict)
-                or len(keyword_boosts) == 0
-            ):
-                print(
-                    "Warning: 'keyword_boosts' strategy selected but keyword_boosts dictionary is empty or invalid. Falling back to 'uniform'."
-                )
-                # Fallback to uniform if keyword_boosts is not provided or empty
-                initial_scores = {i: 1.0 for i in range(num_nodes)}
-            else:
-                # Use keyword weights for initialization
-                for node_id in range(num_nodes):
-                    node_str = self._get_str(node_id)
-                    # Get boost factor, default to 1.0 if not a keyword or boost <= 0
-                    boost_factor = keyword_boosts.get(node_str, 1.0)
-                    if boost_factor <= 0:
-                        boost_factor = 1.0
-                    initial_scores[node_id] = boost_factor
 
         else:
             raise ValueError(
