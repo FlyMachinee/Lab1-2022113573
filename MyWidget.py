@@ -466,7 +466,7 @@ class MyWidget(QWidget, Ui_Form):
 
         self.tableWidget_outputPageRank.setSortingEnabled(True)  # 启用排序
 
-        QMessageBox.information(self, "PageRank计算成功", f"PageRank计算成功！")
+        QMessageBox.information(self, "成功", f"PageRank计算成功！")
 
     def randomWalk(self):
         # 此函数在主 GUI 线程中运行
